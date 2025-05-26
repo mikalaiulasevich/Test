@@ -4,7 +4,8 @@ export const Colors = {
         background: "#F5F5F5",
         primary: "#DEDEDE",
         secondary: "#E7E7E7",
-        icon: "#000000"
+        icon: "#000000",
+        accent: "#FFFFFF"
     },
     dark: {
         //TODO
@@ -12,6 +13,7 @@ export const Colors = {
         background: "#F5F5F5",
         primary: "#DEDEDE",
         secondary: "#E7E7E7",
-        icon: "#000000"
+        icon: "#000000",
+        accent: "#FFFFFF"
     }
 }

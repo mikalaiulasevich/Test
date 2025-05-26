@@ -39,7 +39,8 @@ export const LightTheme = {
     colors: {
         typography: Colors.light.text,
         background: Colors.light.background,
-        primary: Colors.light.primary
+        primary: Colors.light.primary,
+        accent: Colors.light.accent
     },
     ...BaseTheme
 } as const
@@ -48,7 +49,8 @@ export const DarkTheme = {
     colors: {
         typography: Colors.dark.text,
         background: Colors.dark.background,
-        primary: Colors.dark.primary
+        primary: Colors.dark.primary,
+        accent: Colors.dark.accent
     },
     ...BaseTheme
 } as const

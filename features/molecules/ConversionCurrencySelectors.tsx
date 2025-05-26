@@ -2,13 +2,13 @@ import { View } from "react-native"
 
 import { Icons } from "@/constants/assets"
 import { createStyleSheet, useStyles } from "react-native-unistyles"
+import { useCallback } from "react"
 import { useDictionary } from "@/hooks/useDictionary"
 import { UITypography } from "@/components/ui/UITypography"
 import { UIIcon } from "@/components/ui/UIIcon"
 import { UICountrySelectButton } from "@/features/atoms/UICountrySelectButton"
-import { useCallback } from "react"
 
-export const ConversionSelectors = () => {
+export const ConversionCurrencySelectors = () => {
     const { styles } = useStyles(stylesheet)
 
     const dictionary = useDictionary()

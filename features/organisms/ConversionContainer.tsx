@@ -1,11 +1,15 @@
 import { Fragment } from "react"
 
-import { ConversionSelectors } from "@/features/molecules/ConversionSelectors"
+import { ConversionCurrencySelectors } from "@/features/molecules/ConversionCurrencySelectors"
+import { ConversionAmountSelector } from "@/features/molecules/ConversionAmountSelector"
+import { ConversionResultPresenter } from "@/features/molecules/ConversionResultPresenter"
 
 export const ConversionContainer: UIComponent = () => {
     return (
         <Fragment>
-            <ConversionSelectors />
+            <ConversionCurrencySelectors />
+            <ConversionAmountSelector />
+            <ConversionResultPresenter />
         </Fragment>
     )
 }
