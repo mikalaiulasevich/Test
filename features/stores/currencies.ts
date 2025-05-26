@@ -4,7 +4,7 @@ import { ICurrencyEntity } from "@/features/types"
 
 import StoredCurrencies from "@/assets/currencies.json"
 
-interface CurrenciesStore {
+export interface CurrenciesStore {
     currencies: ICurrencyEntity[]
     input: Optional<ICurrencyEntity>
     output: Optional<ICurrencyEntity>

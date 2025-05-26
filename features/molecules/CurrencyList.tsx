@@ -2,6 +2,7 @@ import { useCallback } from "react"
 
 import { UIListTemplate } from "@/features/templates/UIListTemplate"
 import { CurrenciesStoreSelector } from "@/features/stores/currencies"
+import { SearchQueryStoreSelector } from "@/features/stores/query"
 import { createStyleSheet, useStyles } from "react-native-unistyles"
 import { useSelectedCurrencyToIgnore } from "@/hooks/useSelectedCurrency"
 import { useListCurrencies } from "@/hooks/useListCurrrencies"
@@ -15,8 +16,9 @@ export const CurrencyList = () => {
     const { styles } = useStyles(stylesheet)
 
     const currencies = CurrenciesStoreSelector.useGetCurrencies()
+    const query = SearchQueryStoreSelector.useGetDebouncedSearchQuery()
     const selected = useSelectedCurrencyToIgnore()
-    const data = useListCurrencies(currencies, selected)
+    const data = useListCurrencies(currencies, query, selected)
 
     const handleRenderRow = useCallback(
         (row: ListRenderItemInfo<ICurrencyEntity>) => <UICountryCurrencyRow row={row.item} />,

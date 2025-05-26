@@ -1,4 +1,5 @@
 import { TextInput, TextInputProps, View } from "react-native"
+
 import { createStyleSheet, useStyles } from "react-native-unistyles"
 import { UIIcon } from "@/components/ui/UIIcon"
 
@@ -8,6 +9,7 @@ interface UITextInputProps extends TextInputProps {
 
 export const UITextInput: UIComponent<UITextInputProps> = ({ style, icon, ...rest }) => {
     const { styles } = useStyles(stylesheet)
+
     return (
         <View style={styles.container}>
             {icon && (<UIIcon source={icon} />)}
@@ -29,6 +31,7 @@ const stylesheet = createStyleSheet((theme) => ({
         gap: 8
     },
     input: {
+        ...theme.typography.label,
         width: "100%",
         flex: 1
     }
