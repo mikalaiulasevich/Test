@@ -7,19 +7,21 @@ import { UICountryFlag } from "@/features/atoms/UICountryFlag"
 import { UIIcon } from "@/components/ui/UIIcon"
 import { Icons } from "@/constants/assets"
 
+import { ICurrencyEntity } from "@/features/types"
+
 interface UISelectButton extends AnimatedProps<ViewProps> {
     onPress: AnyCallback,
-    countryCode: string,
+    currency: ICurrencyEntity,
 }
 
-export const UICountrySelectButton: UIComponent<UISelectButton> = ({ countryCode, onPress }) => {
+export const UICountrySelectButton: UIComponent<UISelectButton> = ({ currency, onPress }) => {
     const { styles } = useStyles(stylesheet)
 
     return (
         <Pressable onPress={onPress} style={styles.container}>
             <View style={styles.left}>
-                <UICountryFlag code={countryCode} />
-                <UITypography>{countryCode}</UITypography>
+                <UICountryFlag source={currency.flagSrc} />
+                <UITypography>{currency.code}</UITypography>
             </View>
             <UIIcon source={Icons.ChevronDown} />
         </Pressable>

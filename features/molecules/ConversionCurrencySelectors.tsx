@@ -7,31 +7,43 @@ import { useDictionary } from "@/hooks/useDictionary"
 import { UITypography } from "@/components/ui/UITypography"
 import { UIIcon } from "@/components/ui/UIIcon"
 import { UICountrySelectButton } from "@/features/atoms/UICountrySelectButton"
+import { CurrenciesStoreSelector } from "@/features/stores/currencies"
 
 export const ConversionCurrencySelectors = () => {
     const { styles } = useStyles(stylesheet)
 
     const dictionary = useDictionary()
 
+    const input = CurrenciesStoreSelector.useGetInput()
+    const output = CurrenciesStoreSelector.useGetOutput()
+
     const handlePress = useCallback(() => console.log("code: "), [])
 
     return (
         <View style={styles.container}>
-            <View style={styles.slot}>
-                <UITypography>
-                    {dictionary.conversion.labels.from}
-                </UITypography>
-                <UICountrySelectButton countryCode="USD" onPress={handlePress} />
-            </View>
+            {
+                input && (
+                    <View style={styles.slot}>
+                        <UITypography>
+                            {dictionary.conversion.labels.from}
+                        </UITypography>
+                        <UICountrySelectButton currency={input} onPress={handlePress} />
+                    </View>
+                )
+            }
             <View style={styles.delimiter}>
                 <UIIcon style={styles.exchange_icon} source={Icons.Exchange} />
             </View>
-            <View style={styles.slot}>
-                <UITypography>
-                    {dictionary.conversion.labels.to}
-                </UITypography>
-                <UICountrySelectButton countryCode="PLN" onPress={handlePress} />
-            </View>
+            {
+                output && (
+                    <View style={styles.slot}>
+                        <UITypography>
+                            {dictionary.conversion.labels.to}
+                        </UITypography>
+                        <UICountrySelectButton currency={output} onPress={handlePress} />
+                    </View>
+                )
+            }
         </View>
     )
 }

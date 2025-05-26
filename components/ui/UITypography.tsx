@@ -3,23 +3,25 @@ import { type TextProps } from "react-native"
 import { createStyleSheet, useStyles } from "react-native-unistyles"
 
 export enum UITypographyLevel {
-    Label,
-    Title,
-    Display
+    Label = "label",
+    Title = "title",
+    Display = "display"
 }
 
 interface UITypographyProps extends AnimatedProps<TextProps> {
-    level?: UITypographyLevel
+    level?: Optional<UITypographyLevel>
 }
 
 export const UITypography: UIComponent<UITypographyProps> = ({
                                                                  children,
+                                                                 style,
                                                                  level = UITypographyLevel.Label,
                                                                  ...rest
                                                              }) => {
     const { styles } = useStyles(stylesheet, { level })
+
     return (
-        <Animated.Text style={styles.typography} {...rest}>
+        <Animated.Text style={[styles.typography, style]} {...rest}>
             {children}
         </Animated.Text>
     )

@@ -2,21 +2,17 @@ import Animated, { type AnimatedProps } from "react-native-reanimated"
 import { type ViewProps } from "react-native"
 
 import { UIIcon } from "@/components/ui/UIIcon"
-import { useCountryFlagURI } from "@/hooks/useCountryFlagURI"
 import { createStyleSheet, useStyles } from "react-native-unistyles"
 
 interface UICountryFlagProps extends AnimatedProps<ViewProps> {
-    code: string
+    source: string
 }
 
-export const UICountryFlag: UIComponent<UICountryFlagProps> = ({ code }) => {
+export const UICountryFlag: UIComponent<UICountryFlagProps> = ({ source }) => {
     const { styles } = useStyles(stylesheet)
-
-    const flagURI = useCountryFlagURI(code)
-
     return (
         <Animated.View style={styles.container}>
-            <UIIcon style={styles.flag} priority="high" source={flagURI} cachePolicy="memory-disk" />
+            <UIIcon style={styles.flag} priority="high" source={source} cachePolicy="memory-disk" />
         </Animated.View>
     )
 }
