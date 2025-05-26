@@ -5,15 +5,18 @@ const BaseTheme = {
     typography: {
         label: {
             fontSize: 16,
-            font: Fonts.Regular
+            font: Fonts.Regular,
+            fontWeight: "400"
         },
         title: {
             fontSize: 20,
-            font: Fonts.Bold
+            font: Fonts.Bold,
+            fontWeight: "700"
         },
         display: {
             fontSize: 42,
-            font: Fonts.Bold
+            font: Fonts.Bold,
+            fontWeight: "400"
         }
     },
     icons: {

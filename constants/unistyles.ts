@@ -1,4 +1,4 @@
-import { UnistylesRegistry } from "react-native-unistyles"
+import { UnistylesRegistry, UnistylesRuntime } from "react-native-unistyles"
 import { DarkTheme, LightTheme } from "@/constants/theme"
 
 type AppThemes = {
@@ -9,6 +9,8 @@ type AppThemes = {
 declare module "react-native-unistyles" {
     export interface UnistylesThemes extends AppThemes {}
 }
+
+export const SelectedRuntimeTheme = () => UnistylesRuntime.getTheme() as typeof LightTheme
 
 UnistylesRegistry.addThemes(
     {

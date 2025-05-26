@@ -9,7 +9,8 @@ import { UITypography } from "@/components/ui/UITypography"
 import { UIIcon } from "@/components/ui/UIIcon"
 import { UICountrySelectButton } from "@/features/atoms/UICountrySelectButton"
 import { CurrenciesStoreSelector } from "@/features/stores/currencies"
-import { Screens } from "@/constants/navigation"
+import { Routes, Screens } from "@/constants/navigation"
+import { CurrencySelectType } from "@/constants/enums"
 
 export const ConversionCurrencySelectors = () => {
     const { styles } = useStyles(stylesheet)
@@ -21,13 +22,13 @@ export const ConversionCurrencySelectors = () => {
     const output = CurrenciesStoreSelector.useGetOutput()
 
     const handleInputPress = useCallback(() => navigation.push({
-        pathname: Screens.CurrencyView,
-        params: { type: "input" }
+        pathname: Routes[Screens.CurrencyView],
+        params: { type: CurrencySelectType.Input }
     }), [navigation])
 
     const handleOutputPress = useCallback(() => navigation.push({
-        pathname: Screens.CurrencyView,
-        params: { type: "output" }
+        pathname: Routes[Screens.CurrencyView],
+        params: { type: CurrencySelectType.Output }
     }), [navigation])
 
     return (
