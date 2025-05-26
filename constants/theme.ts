@@ -20,7 +20,8 @@ const BaseTheme = {
         }
     },
     icons: {
-        default: 18
+        default: 18,
+        radio: 16
     },
     radiuses: {
         small: 4,
