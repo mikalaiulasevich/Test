@@ -1,13 +1,13 @@
 import { ICurrencyEntity } from "@/features/types"
 
-export const useListCurrencies = (currencies: ICurrencyEntity[], query: Optional<string> = "", selected: Optional<ICurrencyEntity>) => {
+export const useListCurrencies = (currencies: ICurrencyEntity[], query: Optional<string> = "", selected: ICurrencyEntity) => {
     return currencies
         .filter((entity) => predicates.code(entity, selected))
         .filter((entity) => predicates.query(entity, query))
 }
 
 const predicates = {
-    code: (entity: ICurrencyEntity, selected: Optional<ICurrencyEntity>) =>
+    code: (entity: ICurrencyEntity, selected: ICurrencyEntity) =>
         selected && entity.code !== selected.code,
 
     query: (entity: ICurrencyEntity, query: string) =>

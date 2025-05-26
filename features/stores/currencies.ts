@@ -7,8 +7,8 @@ import { supportedCurrencies } from "@/constants/supported"
 
 export interface CurrenciesStore {
     currencies: ICurrencyEntity[]
-    input: Optional<ICurrencyEntity>
-    output: Optional<ICurrencyEntity>
+    input: ICurrencyEntity
+    output: ICurrencyEntity
 }
 
 const defaultValues = {
@@ -24,8 +24,8 @@ const predicates = {
 
 const defaultProps: CurrenciesStore = {
     currencies: StoredCurrencies.filter(predicates.supportedCurrencies),
-    input: StoredCurrencies.find(predicates.defaultInput) ?? StoredCurrencies.at(0),
-    output: StoredCurrencies.find(predicates.defaultOutput) ?? StoredCurrencies.at(1)
+    input: StoredCurrencies.find(predicates.defaultInput) ?? StoredCurrencies.at(0)!,
+    output: StoredCurrencies.find(predicates.defaultOutput) ?? StoredCurrencies.at(1)!
 }
 
 export const useCurrenciesStore = create<CurrenciesStore>(() => ({

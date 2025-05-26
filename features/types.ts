@@ -1,5 +1,3 @@
-import { supportedCurrencies } from "@/constants/supported"
-
 export interface ICurrencyEntity extends UniqEntity {
     name: string,
     symbol: string,
@@ -14,5 +12,5 @@ export interface ICurrencyEntity extends UniqEntity {
 export interface ICurrencyRateResponse {
     "date": string,
     "base": string,
-    "rates": Record<keyof typeof supportedCurrencies, string>
+    "rates": Record<string, number>
 }
