@@ -1,15 +1,13 @@
-import { Image, ImageProps } from "expo-image"
-import Animated from "react-native-reanimated"
+import { ImageProps } from "expo-image"
 import { createStyleSheet, useStyles } from "react-native-unistyles"
-
-const AnimatedExpoImage = Animated.createAnimatedComponent(Image)
+import { AnimatedImage } from "@/components/converted"
 
 interface UIIconProps extends ImageProps {}
 
 export const UIIcon: UIComponent<UIIconProps> = ({ style, tintColor, ...rest }) => {
     const { styles } = useStyles(stylesheet)
     return (
-        <AnimatedExpoImage style={[styles.icon, style]} {...rest} />
+        <AnimatedImage style={[styles.icon, style]} {...rest} />
     )
 }
 
