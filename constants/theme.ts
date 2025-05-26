@@ -44,6 +44,7 @@ export const LightTheme = {
         typography: Colors.light.text,
         background: Colors.light.background,
         primary: Colors.light.primary,
+        secondary: Colors.light.secondary,
         accent: Colors.light.accent
     },
     ...BaseTheme
@@ -54,6 +55,7 @@ export const DarkTheme = {
         typography: Colors.dark.text,
         background: Colors.dark.background,
         primary: Colors.dark.primary,
+        secondary: Colors.dark.secondary,
         accent: Colors.dark.accent
     },
     ...BaseTheme

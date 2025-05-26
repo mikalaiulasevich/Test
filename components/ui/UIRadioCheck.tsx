@@ -1,16 +1,34 @@
-import Animated, { type AnimatedProps } from "react-native-reanimated"
+import Animated, {
+    type AnimatedProps,
+    Easing,
+    useAnimatedStyle,
+    useSharedValue,
+    withTiming
+} from "react-native-reanimated"
 import { type ViewProps } from "react-native"
 import { createStyleSheet, useStyles } from "react-native-unistyles"
+import { useEffect } from "react"
 
 interface UIRadioCheckProps extends AnimatedProps<ViewProps> {
     value: boolean,
 }
 
-export const UIRadioCheck: UIComponent<UIRadioCheckProps> = ({ style, ...rest }) => {
+export const UIRadioCheck: UIComponent<UIRadioCheckProps> = ({ style, value, ...rest }) => {
     const { styles } = useStyles(stylesheet)
+
+    const opacity = useSharedValue(0)
+
+    useEffect(() => {
+        opacity.value = withTiming(value ? 1 : 0, { duration: 350, easing: Easing.linear })
+    }, [value])
+
+    const animatedOpacityStyles = useAnimatedStyle(() => ({
+        opacity: opacity.value
+    }))
+
     return (
         <Animated.View style={[styles.container, style]} {...rest} >
-            <Animated.View style={styles.radio} />
+            <Animated.View style={[styles.radio, animatedOpacityStyles]} />
         </Animated.View>
     )
 }

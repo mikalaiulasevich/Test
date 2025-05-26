@@ -8,25 +8,31 @@ import { UIRadioCheck } from "@/components/ui/UIRadioCheck"
 import { useCallback } from "react"
 import { useLocalSearchParams, useNavigation } from "expo-router"
 import { CurrenciesStoreAction } from "@/features/stores/currencies"
+import { useIsSelectedCurrency } from "@/hooks/useSelectedCurrency"
+import { useAnimatedCallback } from "@/hooks/useAnimatedCallback"
+import { useHapticsCallback } from "@/hooks/useHapticCallback"
 
 import { CurrencySelectType } from "@/constants/enums"
 import { type ICurrencyEntity } from "@/features/types"
 
 interface UICountryCurrencyRowProps {
     row: ICurrencyEntity
-    index: number,
 }
 
-export const UICountryCurrencyRow: UIComponent<UICountryCurrencyRowProps> = ({ row, index }) => {
-
-    const { styles } = useStyles(stylesheet)
-    const { type } = useLocalSearchParams<{ type: CurrencySelectType }>()
+export const UICountryCurrencyRow: UIComponent<UICountryCurrencyRowProps> = ({ row }) => {
 
     const navigation = useNavigation()
+    const selected = useIsSelectedCurrency(row)
 
-    const handleRowPress = useCallback(() => {
+    const { styles } = useStyles(stylesheet, { selected })
+    const { type } = useLocalSearchParams<{ type: CurrencySelectType }>()
+
+    const handleGoBack = useCallback(() => navigation.goBack(), [navigation])
+    const callback = useAnimatedCallback(handleGoBack)
+
+    const handleRowPress = useHapticsCallback(() => {
             actions[type](row)
-            navigation.goBack()
+            callback()
         },
         [type, row]
     )
@@ -41,7 +47,7 @@ export const UICountryCurrencyRow: UIComponent<UICountryCurrencyRowProps> = ({ r
                 </UITypography>
             </View>
             <View style={styles.right}>
-                <UIRadioCheck value={true} />
+                <UIRadioCheck value={selected} />
             </View>
         </Pressable>
     )
@@ -58,7 +64,17 @@ const stylesheet = createStyleSheet((theme) => ({
         padding: 16,
         flexDirection: "row",
         justifyContent: "space-between",
-        gap: 16
+        alignItems: "center",
+        gap: 16,
+        borderRadius: theme.radiuses.default,
+        variants: {
+            selected: {
+                true: {
+                    backgroundColor: theme.colors.primary
+                },
+                false: {}
+            }
+        }
     },
     label: {
         width: "auto"

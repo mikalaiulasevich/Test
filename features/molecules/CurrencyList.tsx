@@ -3,7 +3,7 @@ import { useCallback } from "react"
 import { UIListTemplate } from "@/features/templates/UIListTemplate"
 import { CurrenciesStoreSelector } from "@/features/stores/currencies"
 import { createStyleSheet, useStyles } from "react-native-unistyles"
-import { useSelectedCurrencyToIgnore } from "@/hooks/useSelectedCurrencyToIgnore"
+import { useSelectedCurrencyToIgnore } from "@/hooks/useSelectedCurrency"
 import { useListCurrencies } from "@/hooks/useListCurrrencies"
 import { UICountryCurrencyRow } from "@/features/atoms/UICountryCurrencyRow"
 
@@ -19,7 +19,7 @@ export const CurrencyList = () => {
     const data = useListCurrencies(currencies, selected)
 
     const handleRenderRow = useCallback(
-        (row: ListRenderItemInfo<ICurrencyEntity>) => <UICountryCurrencyRow index={row.index} row={row.item} />,
+        (row: ListRenderItemInfo<ICurrencyEntity>) => <UICountryCurrencyRow row={row.item} />,
         []
     )
 
@@ -38,6 +38,8 @@ const stylesheet = createStyleSheet((theme) => ({
         marginHorizontal: -theme.margins.layout
     },
     container: {
-        paddingHorizontal: theme.margins.layout
+        marginHorizontal: theme.margins.layout,
+        backgroundColor: theme.colors.secondary,
+        borderRadius: theme.radiuses.default
     }
 }))

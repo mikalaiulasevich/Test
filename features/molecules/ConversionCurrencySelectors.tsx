@@ -2,8 +2,8 @@ import { View } from "react-native"
 
 import { Icons } from "@/constants/assets"
 import { createStyleSheet, useStyles } from "react-native-unistyles"
-import { useCallback } from "react"
 import { useRouter } from "expo-router"
+import { useHapticsCallback } from "@/hooks/useHapticCallback"
 import { useDictionary } from "@/hooks/useDictionary"
 import { UITypography } from "@/components/ui/UITypography"
 import { UIIcon } from "@/components/ui/UIIcon"
@@ -21,12 +21,12 @@ export const ConversionCurrencySelectors = () => {
     const input = CurrenciesStoreSelector.useGetInput()
     const output = CurrenciesStoreSelector.useGetOutput()
 
-    const handleInputPress = useCallback(() => navigation.push({
+    const handleInputPress = useHapticsCallback(() => navigation.push({
         pathname: Routes[Screens.CurrencyView],
         params: { type: CurrencySelectType.Input }
     }), [navigation])
 
-    const handleOutputPress = useCallback(() => navigation.push({
+    const handleOutputPress = useHapticsCallback(() => navigation.push({
         pathname: Routes[Screens.CurrencyView],
         params: { type: CurrencySelectType.Output }
     }), [navigation])
