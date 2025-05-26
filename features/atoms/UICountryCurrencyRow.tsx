@@ -14,6 +14,7 @@ import { useHapticsCallback } from "@/hooks/useHapticCallback"
 
 import { CurrencySelectType } from "@/constants/enums"
 import { type ICurrencyEntity } from "@/features/types"
+import { fetchRates } from "@/utils/networking"
 
 interface UICountryCurrencyRowProps {
     row: ICurrencyEntity
@@ -30,12 +31,7 @@ export const UICountryCurrencyRow: UIComponent<UICountryCurrencyRowProps> = ({ r
     const handleGoBack = useCallback(() => navigation.goBack(), [navigation])
     const callback = useAnimatedCallback(handleGoBack)
 
-    const handleRowPress = useHapticsCallback(() => {
-            actions[type](row)
-            callback()
-        },
-        [type, row]
-    )
+    const handleRowPress = useHapticsCallback(() => fetchRates(() => actions[type](row), callback), [type, row])
 
     return (
         <Pressable onPress={handleRowPress}
