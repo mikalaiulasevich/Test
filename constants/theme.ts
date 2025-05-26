@@ -6,17 +6,17 @@ const BaseTheme = {
         label: {
             fontSize: 16,
             font: Fonts.Regular,
-            fontWeight: "400"
+            fontWeight: "400" as const
         },
         title: {
             fontSize: 20,
             font: Fonts.Bold,
-            fontWeight: "700"
+            fontWeight: "700" as const
         },
         display: {
             fontSize: 42,
             font: Fonts.Bold,
-            fontWeight: "400"
+            fontWeight: "400" as const
         }
     },
     icons: {

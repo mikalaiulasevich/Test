@@ -22,7 +22,9 @@ const stylesheet = createStyleSheet((theme) => ({
         borderColor: theme.colors.typography,
         borderWidth: theme.borders.default,
         borderRadius: theme.radiuses.small,
-        overflow: "hidden"
+        overflow: "hidden",
+        width: 30,
+        height: 20
     },
     flag: {
         width: 30,
