@@ -3,7 +3,7 @@ import { createStyleSheet, useStyles } from "react-native-unistyles"
 
 interface UILayoutProps extends SafeAreaViewProps {}
 
-export const UILayout: UIComponent<UILayoutProps> = ({ children, style, edges = ["top", "bottom"], ...rest }) => {
+export const UILayout: UIComponent<UILayoutProps> = ({ children, style, edges = ["bottom"], ...rest }) => {
     const { styles } = useStyles(stylesheet)
     return (
         <SafeAreaView style={[styles.layout, style]} edges={edges} {...rest}>
@@ -14,8 +14,8 @@ export const UILayout: UIComponent<UILayoutProps> = ({ children, style, edges = 
 
 const stylesheet = createStyleSheet(theme => ({
     layout: {
-        padding: theme.margins.layout,
         flex: 1,
+        paddingHorizontal: theme.margins.layout,
         backgroundColor: theme.colors.background
     }
 }))

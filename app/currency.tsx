@@ -1,4 +1,4 @@
-import { Platform, Text } from "react-native"
+import { Platform } from "react-native"
 
 import { UILayout } from "@/components/ui/UILayout"
 import { UITypography, UITypographyLevel } from "@/components/ui/UITypography"
@@ -6,6 +6,7 @@ import { useNavigation } from "expo-router"
 import { useEffect } from "react"
 import { useDictionary } from "@/hooks/useDictionary"
 import { createStyleSheet, useStyles } from "react-native-unistyles"
+import { CurrencySelectContainer } from "@/features/organisms/CurrencySelectContainer"
 
 export default function CurrencyView() {
 
@@ -28,16 +29,14 @@ export default function CurrencyView() {
 
     return (
         <UILayout style={styles.container}>
-            <Text>Details</Text>
+            <CurrencySelectContainer />
         </UILayout>
     )
 }
 
 const stylesheet = createStyleSheet(() => ({
     container: {
-        flex: 1,
-        justifyContent: "center",
-        alignItems: "center"
+        flex: 1
     },
     title: {
         left: Platform.select<number>({
