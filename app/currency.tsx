@@ -1,17 +1,19 @@
-import { View, Text, StyleSheet } from "react-native"
+import { StyleSheet, Text } from "react-native"
+
+import { UILayout } from "@/components/ui/UILayout"
 
 export default function CurrencyView() {
     return (
-        <View style={styles.container}>
+        <UILayout style={styles.container}>
             <Text>Details</Text>
-        </View>
-    );
+        </UILayout>
+    )
 }
 
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-        justifyContent: 'center',
-        alignItems: 'center',
-    },
-});
+        justifyContent: "center",
+        alignItems: "center"
+    }
+})

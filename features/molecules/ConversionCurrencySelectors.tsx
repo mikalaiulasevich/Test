@@ -3,21 +3,32 @@ import { View } from "react-native"
 import { Icons } from "@/constants/assets"
 import { createStyleSheet, useStyles } from "react-native-unistyles"
 import { useCallback } from "react"
+import { useRouter } from "expo-router"
 import { useDictionary } from "@/hooks/useDictionary"
 import { UITypography } from "@/components/ui/UITypography"
 import { UIIcon } from "@/components/ui/UIIcon"
 import { UICountrySelectButton } from "@/features/atoms/UICountrySelectButton"
 import { CurrenciesStoreSelector } from "@/features/stores/currencies"
+import { Screens } from "@/constants/navigation"
 
 export const ConversionCurrencySelectors = () => {
     const { styles } = useStyles(stylesheet)
 
     const dictionary = useDictionary()
+    const navigation = useRouter()
 
     const input = CurrenciesStoreSelector.useGetInput()
     const output = CurrenciesStoreSelector.useGetOutput()
 
-    const handlePress = useCallback(() => console.log("code: "), [])
+    const handleInputPress = useCallback(() => navigation.push({
+        pathname: Screens.CurrencyView,
+        params: { type: "input" }
+    }), [navigation])
+
+    const handleOutputPress = useCallback(() => navigation.push({
+        pathname: Screens.CurrencyView,
+        params: { type: "output" }
+    }), [navigation])
 
     return (
         <View style={styles.container}>
@@ -27,7 +38,7 @@ export const ConversionCurrencySelectors = () => {
                         <UITypography>
                             {dictionary.conversion.labels.from}
                         </UITypography>
-                        <UICountrySelectButton currency={input} onPress={handlePress} />
+                        <UICountrySelectButton currency={input} onPress={handleInputPress} />
                     </View>
                 )
             }
@@ -40,7 +51,7 @@ export const ConversionCurrencySelectors = () => {
                         <UITypography>
                             {dictionary.conversion.labels.to}
                         </UITypography>
-                        <UICountrySelectButton currency={output} onPress={handlePress} />
+                        <UICountrySelectButton currency={output} onPress={handleOutputPress} />
                     </View>
                 )
             }
