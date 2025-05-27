@@ -33,29 +33,21 @@ export const ConversionCurrencySelectors = () => {
 
     return (
         <View style={styles.container}>
-            {
-                input && (
-                    <View style={styles.slot}>
-                        <UITypography>
-                            {dictionary.conversion.labels.from}
-                        </UITypography>
-                        <UICountrySelectButton currency={input} onPress={handleInputPress} />
-                    </View>
-                )
-            }
+            <View style={styles.slot}>
+                <UITypography>
+                    {dictionary.conversion.labels.from}
+                </UITypography>
+                <UICountrySelectButton currency={input} onPress={handleInputPress} />
+            </View>
             <View style={styles.delimiter}>
                 <UIIcon style={styles.exchange_icon} source={Icons.Exchange} />
             </View>
-            {
-                output && (
-                    <View style={styles.slot}>
-                        <UITypography>
-                            {dictionary.conversion.labels.to}
-                        </UITypography>
-                        <UICountrySelectButton currency={output} onPress={handleOutputPress} />
-                    </View>
-                )
-            }
+            <View style={styles.slot}>
+                <UITypography>
+                    {dictionary.conversion.labels.to}
+                </UITypography>
+                <UICountrySelectButton currency={output} onPress={handleOutputPress} />
+            </View>
         </View>
     )
 }
