@@ -73,6 +73,7 @@ export const UICurrencyTextInput: UIComponent<UICurrencyInputProps> = ({
             hitSlop={20}
             onChange={_onChange}
             value={formattedValue}
+            keyboardType="decimal-pad"
             {...rest}
         />
     )
