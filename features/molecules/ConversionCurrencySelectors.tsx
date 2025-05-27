@@ -1,4 +1,4 @@
-import { View } from "react-native"
+import { Pressable, View } from "react-native"
 
 import { Icons } from "@/constants/assets"
 import { createStyleSheet, useStyles } from "react-native-unistyles"
@@ -8,9 +8,10 @@ import { useDictionary } from "@/hooks/useDictionary"
 import { UITypography } from "@/components/ui/UITypography"
 import { UIIcon } from "@/components/ui/UIIcon"
 import { UICountrySelectButton } from "@/features/atoms/UICountrySelectButton"
-import { CurrenciesStoreSelector } from "@/features/stores/currencies"
+import { CurrenciesStoreAction, CurrenciesStoreSelector } from "@/features/stores/currencies"
 import { Routes, Screens } from "@/constants/navigation"
 import { CurrencySelectType } from "@/constants/enums"
+import { useCallback } from "react"
 
 export const ConversionCurrencySelectors = () => {
     const { styles } = useStyles(stylesheet)
@@ -20,6 +21,14 @@ export const ConversionCurrencySelectors = () => {
 
     const input = CurrenciesStoreSelector.useGetInput()
     const output = CurrenciesStoreSelector.useGetOutput()
+
+    const handleSwitchPress = useCallback(
+        () => {
+            CurrenciesStoreAction.setInput(output)
+            CurrenciesStoreAction.setOutput(input)
+        },
+        [input, output]
+    )
 
     const handleInputPress = useHapticsCallback(() => navigation.push({
         pathname: Routes[Screens.CurrencyView],
@@ -39,9 +48,9 @@ export const ConversionCurrencySelectors = () => {
                 </UITypography>
                 <UICountrySelectButton currency={input} onPress={handleInputPress} />
             </View>
-            <View style={styles.delimiter}>
+            <Pressable onPress={handleSwitchPress} style={styles.delimiter}>
                 <UIIcon style={styles.exchange_icon} source={Icons.Exchange} />
-            </View>
+            </Pressable>
             <View style={styles.slot}>
                 <UITypography>
                     {dictionary.conversion.labels.to}

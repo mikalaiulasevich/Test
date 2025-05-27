@@ -3,6 +3,7 @@ import { type ViewProps } from "react-native"
 
 import { UIIcon } from "@/components/ui/UIIcon"
 import { createStyleSheet, useStyles } from "react-native-unistyles"
+import { DefaultAnimationDuration } from "@/constants/ui"
 
 interface UICountryFlagProps extends AnimatedProps<ViewProps> {
     source: string
@@ -12,7 +13,10 @@ export const UICountryFlag: UIComponent<UICountryFlagProps> = ({ source }) => {
     const { styles } = useStyles(stylesheet)
     return (
         <Animated.View style={styles.container}>
-            <UIIcon style={styles.flag} priority="high" source={source} cachePolicy="memory-disk" />
+            <UIIcon style={styles.flag} priority="high"
+                    source={source}
+                    transition={DefaultAnimationDuration}
+                    cachePolicy="memory-disk" />
         </Animated.View>
     )
 }
