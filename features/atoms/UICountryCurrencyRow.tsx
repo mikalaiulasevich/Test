@@ -29,9 +29,12 @@ export const UICountryCurrencyRow: UIComponent<UICountryCurrencyRowProps> = ({ r
     const { type } = useLocalSearchParams<{ type: CurrencySelectType }>()
 
     const handleGoBack = useCallback(() => navigation.goBack(), [navigation])
-    const callback = useAnimatedCallback(handleGoBack)
+    const handleSelect = useCallback(() => actions[type](row), [type])
 
-    const handleRowPress = useHapticsCallback(() => fetchRates(() => actions[type](row), callback), [type, row])
+    const callback = useAnimatedCallback(handleGoBack)
+    const select = useAnimatedCallback(handleSelect)
+
+    const handleRowPress = useHapticsCallback(() => fetchRates(row, select, callback), [row])
 
     return (
         <Pressable onPress={handleRowPress}

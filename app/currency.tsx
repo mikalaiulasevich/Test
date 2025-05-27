@@ -2,11 +2,12 @@ import { Platform } from "react-native"
 
 import { UILayout } from "@/components/ui/UILayout"
 import { UITypography, UITypographyLevel } from "@/components/ui/UITypography"
-import { useNavigation } from "expo-router"
-import { useEffect } from "react"
+import { useFocusEffect, useNavigation } from "expo-router"
+import { useCallback, useEffect } from "react"
 import { useDictionary } from "@/hooks/useDictionary"
 import { createStyleSheet, useStyles } from "react-native-unistyles"
 import { CurrencySelectContainer } from "@/features/organisms/CurrencySelectContainer"
+import { SearchQueryStoreAction } from "@/features/stores/query"
 
 export default function CurrencyView() {
 
@@ -14,6 +15,12 @@ export default function CurrencyView() {
     const dictionary = useDictionary()
 
     const { styles } = useStyles(stylesheet)
+    
+    useFocusEffect(
+        useCallback(
+            () => () => SearchQueryStoreAction.reset()
+        )
+    )
 
     useEffect(() => {
         navigation.setOptions({

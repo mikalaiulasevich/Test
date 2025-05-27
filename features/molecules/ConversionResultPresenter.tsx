@@ -5,6 +5,7 @@ import { CurrenciesStoreSelector } from "@/features/stores/currencies"
 import { useCalculatedConversionResult } from "@/hooks/useCalculatedConversionResult"
 import { AmountStoreSelector } from "@/features/stores/amount"
 import { formatNumberWithConfig } from "@/utils/math"
+import { useAnimatedNumber } from "@/hooks/useAnimatedNumber"
 
 export const ConversionResultPresenter: UIComponent = () => {
     const { styles } = useStyles(stylesheet)
@@ -13,14 +14,17 @@ export const ConversionResultPresenter: UIComponent = () => {
     const output = CurrenciesStoreSelector.useGetOutput()
     const amount = AmountStoreSelector.useGetAmount()
 
-    const result = useCalculatedConversionResult(input, output, amount || 0)
+    const result = useCalculatedConversionResult(input, output, amount)
 
-    const formattedInput = formatNumberWithConfig(amount || 0, {
+    const animatedAmount = useAnimatedNumber(amount)
+    const animatedResult = useAnimatedNumber(result)
+
+    const formattedInput = formatNumberWithConfig(animatedAmount, {
         suffix: input.symbol,
         precision: input.rounding
     })
 
-    const formattedOutput = formatNumberWithConfig(result, {
+    const formattedOutput = formatNumberWithConfig(animatedResult, {
         suffix: " " + output.symbol,
         precision: output.rounding
     })

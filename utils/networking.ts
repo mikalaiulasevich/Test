@@ -1,21 +1,21 @@
 import { HttpClient } from "@/utils/http"
-import { CurrenciesStoreStaticSelector } from "@/features/stores/currencies"
 import { CurrencyRatesStaticSelector, CurrencyRatesStoreAction } from "@/features/stores/rates"
 
-import { type ICurrencyRateResponse } from "@/features/types"
+import { ICurrencyEntity, type ICurrencyRateResponse } from "@/features/types"
 
-export const fetchRates = (action: AnyCallback, callback: AnyCallback) => {
+export const fetchRates = (entity: ICurrencyEntity, action: AnyCallback, callback: AnyCallback) => {
 
-    action()
+    const dispatch = () => {
+        callback()
+        action()
+    }
 
-    const base = CurrenciesStoreStaticSelector.getInput()
+    if (CurrencyRatesStaticSelector.getRateBy(entity.code)) return dispatch()
 
-    if (CurrencyRatesStaticSelector.getRateBy(base.code)) return callback()
-
-    if (base) {
-        HttpClient.get<ICurrencyRateResponse>(`/latest?api_key=${process.env.EXPO_PUBLIC_RATES_API_KEY}&base=${base.code}&resolution=1d`)
-            .then((response) => CurrencyRatesStoreAction.setRateBy(base.code, response.data))
-            .then(callback)
-            .catch(callback)
+    if (entity.code) {
+        HttpClient.get<ICurrencyRateResponse>(`/latest?api_key=${process.env.EXPO_PUBLIC_RATES_API_KEY}&base=${entity.code}&resolution=1d`)
+            .then((response) => CurrencyRatesStoreAction.setRateBy(entity.code, response.data))
+            .then(dispatch)
+            .catch(dispatch)
     }
 }

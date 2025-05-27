@@ -6,6 +6,7 @@ import { UnistylesProvider } from "react-native-unistyles"
 import { Stack } from "expo-router"
 import { useEffect } from "react"
 import { fetchRates } from "@/utils/networking"
+import { CurrenciesStoreSelector } from "@/features/stores/currencies"
 
 export default function RootLayout() {
     const [loaded] = useFonts({
@@ -13,10 +14,13 @@ export default function RootLayout() {
         Inter_700Bold
     })
 
+    const input = CurrenciesStoreSelector.useGetInput()
+
     useEffect(() => {
         if (loaded) {
-
+            
             fetchRates(
+                input,
                 () => SplashScreen.hideAsync(),
                 () => {
                 }
