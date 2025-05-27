@@ -1,5 +1,6 @@
 import {
     type NativeSyntheticEvent,
+    Platform,
     TextInput,
     type TextInputChangeEventData,
     type TextInputProps,
@@ -83,7 +84,10 @@ export const stylesheet = createStyleSheet((theme) => ({
     container: {
         height: 42,
         paddingHorizontal: 16,
-        paddingVertical: 12,
+        paddingVertical: Platform.select({
+            ios: 12,
+            default: 0
+        }),
         backgroundColor: theme.colors.accent,
         borderRadius: theme.radiuses.default,
         borderColor: theme.colors.typography,
