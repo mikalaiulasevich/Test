@@ -15,7 +15,8 @@ export const CurrencySearchBar: UIComponent = () => {
 
     return (
         <View style={styles.container}>
-            <UITextInput value={query} onChangeText={SearchQueryStoreAction.setSearchQuery} icon={Icons.Search} />
+            <UITextInput textContentType="countryName" value={query}
+                         onChangeText={SearchQueryStoreAction.setSearchQuery} icon={Icons.Search} />
         </View>
     )
 }

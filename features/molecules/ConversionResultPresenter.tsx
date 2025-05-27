@@ -3,36 +3,41 @@ import { createStyleSheet, useStyles } from "react-native-unistyles"
 import { UITypography, UITypographyLevel } from "@/components/ui/UITypography"
 import { CurrenciesStoreSelector } from "@/features/stores/currencies"
 import { useCalculatedConversionResult } from "@/hooks/useCalculatedConversionResult"
+import { AmountStoreSelector } from "@/features/stores/amount"
+import { formatNumberWithConfig } from "@/utils/math"
 
 export const ConversionResultPresenter: UIComponent = () => {
     const { styles } = useStyles(stylesheet)
 
     const input = CurrenciesStoreSelector.useGetInput()
     const output = CurrenciesStoreSelector.useGetOutput()
+    const amount = AmountStoreSelector.useGetAmount()
 
-    const result = useCalculatedConversionResult(input, output)
+    const result = useCalculatedConversionResult(input, output, amount || 0)
+
+    const formattedInput = formatNumberWithConfig(amount || 0, {
+        suffix: input.symbol,
+        precision: input.rounding
+    })
+
+    const formattedOutput = formatNumberWithConfig(result, {
+        suffix: " " + output.symbol,
+        precision: output.rounding
+    })
 
     return (
         <View style={styles.container}>
-            {
-                input && (
-                    <UITypography>
-                        {`1${input.symbol} =`}
-                    </UITypography>
-                )
-            }
-            {
-                output && (
-                    <UITypography level={UITypographyLevel.Display}>
-                        {`${result} ${output.symbol}`}
-                    </UITypography>
-                )
-            }
+            <UITypography>
+                {`${formattedInput} =`}
+            </UITypography>
+            <UITypography level={UITypographyLevel.Display}>
+                {formattedOutput}
+            </UITypography>
         </View>
     )
 }
 
-const stylesheet = createStyleSheet((theme) => ({
+const stylesheet = createStyleSheet(() => ({
     container: {
         marginTop: 24,
         gap: 4

@@ -1,10 +1,19 @@
-import { TextInput, TextInputProps, View } from "react-native"
+import {
+    type NativeSyntheticEvent,
+    TextInput,
+    type TextInputChangeEventData,
+    type TextInputProps,
+    View
+} from "react-native"
 
 import { createStyleSheet, useStyles } from "react-native-unistyles"
 import { UIIcon } from "@/components/ui/UIIcon"
+import { useCallback } from "react"
+import { useCurrencyValue } from "@/hooks/useCurrencyValue"
+import { formatNumber, getUnformattedValue, isFormattedPartially } from "@/utils/math"
 
 interface UITextInputProps extends TextInputProps {
-    icon: Optional<string>
+    icon?: Optional<string>
 }
 
 export const UITextInput: UIComponent<UITextInputProps> = ({ style, icon, ...rest }) => {
@@ -18,7 +27,57 @@ export const UITextInput: UIComponent<UITextInputProps> = ({ style, icon, ...res
     )
 }
 
-const stylesheet = createStyleSheet((theme) => ({
+interface UICurrencyInputProps extends Omit<UITextInputProps, "value" | "onChange"> {
+    value: number;
+    minValue?: number;
+    maxValue?: number;
+    onChange?: (amount: number) => void;
+}
+
+export const UICurrencyTextInput: UIComponent<UICurrencyInputProps> = ({
+                                                                           value,
+                                                                           minValue = -999999999999999,
+                                                                           maxValue = 999999999999999,
+                                                                           onChange,
+                                                                           style,
+                                                                           icon,
+                                                                           ...rest
+                                                                       }) => {
+
+    const isValid = useCallback(
+        (newValue: number) => {
+            return !((minValue !== undefined && newValue < minValue) ||
+                (maxValue !== undefined && newValue > maxValue))
+
+        },
+        [minValue, maxValue]
+    )
+    const { formattedValue, onChangeValue } = useCurrencyValue<number, string>({
+        onChange,
+        value,
+        getFormattedValue: formatNumber,
+        isFormattedPartially,
+        isValid,
+        getUnformattedValue
+    })
+
+    const _onChange = useCallback(
+        (e: NativeSyntheticEvent<TextInputChangeEventData>) => {
+            onChangeValue(e.nativeEvent.text)
+        },
+        [onChangeValue]
+    )
+
+    return (
+        <UITextInput
+            onChange={_onChange}
+            value={formattedValue}
+            {...rest}
+        />
+    )
+}
+
+export const stylesheet = createStyleSheet((theme) => ({
     container: {
         height: 42,
         paddingHorizontal: 16,
