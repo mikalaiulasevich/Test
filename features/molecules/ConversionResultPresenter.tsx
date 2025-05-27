@@ -6,6 +6,9 @@ import { useCalculatedConversionResult } from "@/hooks/useCalculatedConversionRe
 import { AmountStoreSelector } from "@/features/stores/amount"
 import { formatNumberWithConfig } from "@/utils/math"
 import { useAnimatedNumber } from "@/hooks/useAnimatedNumber"
+import { AnimationStoreAction, AnimationStoreSelector } from "@/features/stores/animation"
+import { Transitions } from "@/constants/transitions"
+import { useCallback } from "react"
 
 export const ConversionResultPresenter: UIComponent = () => {
     const { styles } = useStyles(stylesheet)
@@ -16,8 +19,15 @@ export const ConversionResultPresenter: UIComponent = () => {
 
     const result = useCalculatedConversionResult(input, output, amount)
 
-    const animatedAmount = useAnimatedNumber(amount)
-    const animatedResult = useAnimatedNumber(result)
+    const delay = AnimationStoreSelector.useGetDelayByAnimation(Transitions.CurrencyNumberTransition)
+
+    const clear = useCallback(
+        () => AnimationStoreAction.deleteAnimationDelayBy(Transitions.CurrencyNumberTransition),
+        []
+    )
+
+    const animatedAmount = useAnimatedNumber(amount, delay, clear)
+    const animatedResult = useAnimatedNumber(result, delay, clear)
 
     const formattedInput = formatNumberWithConfig(animatedAmount, {
         suffix: input.symbol,

@@ -6,8 +6,8 @@ import { ICurrencyEntity, type ICurrencyRateResponse } from "@/features/types"
 export const fetchRates = (entity: ICurrencyEntity, action: AnyCallback, callback: AnyCallback) => {
 
     const dispatch = () => {
-        callback()
         action()
+        callback()
     }
 
     if (CurrencyRatesStaticSelector.getRateBy(entity.code)) return dispatch()

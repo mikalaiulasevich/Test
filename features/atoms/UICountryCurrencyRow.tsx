@@ -1,20 +1,22 @@
 import { Pressable, View } from "react-native"
 
 import { createStyleSheet, useStyles } from "react-native-unistyles"
-import { UICountryFlag } from "@/features/atoms/UICountryFlag"
-import { UITypography } from "@/components/ui/UITypography"
-import { UIRadioCheck } from "@/components/ui/UIRadioCheck"
-
 import { useCallback } from "react"
-import { useLocalSearchParams, useNavigation } from "expo-router"
-import { CurrenciesStoreAction } from "@/features/stores/currencies"
+import { fetchRates } from "@/utils/networking"
 import { useIsSelectedCurrency } from "@/hooks/useSelectedCurrency"
 import { useAnimatedCallback } from "@/hooks/useAnimatedCallback"
 import { useHapticsCallback } from "@/hooks/useHapticCallback"
+import { useLocalSearchParams, useRouter } from "expo-router"
+import { UICountryFlag } from "@/features/atoms/UICountryFlag"
+import { UITypography } from "@/components/ui/UITypography"
+import { UIRadioCheck } from "@/components/ui/UIRadioCheck"
+import { CurrenciesStoreAction } from "@/features/stores/currencies"
 
 import { CurrencySelectType } from "@/constants/enums"
 import { type ICurrencyEntity } from "@/features/types"
-import { fetchRates } from "@/utils/networking"
+import { AnimationStoreAction } from "@/features/stores/animation"
+import { Transitions } from "@/constants/transitions"
+import { DefaultAnimationDuration } from "@/constants/ui"
 
 interface UICountryCurrencyRowProps {
     row: ICurrencyEntity
@@ -22,19 +24,21 @@ interface UICountryCurrencyRowProps {
 
 export const UICountryCurrencyRow: UIComponent<UICountryCurrencyRowProps> = ({ row }) => {
 
-    const navigation = useNavigation()
+    const navigation = useRouter()
     const selected = useIsSelectedCurrency(row)
 
     const { styles } = useStyles(stylesheet, { selected })
     const { type } = useLocalSearchParams<{ type: CurrencySelectType }>()
 
-    const handleGoBack = useCallback(() => navigation.goBack(), [navigation])
-    const handleSelect = useCallback(() => actions[type](row), [type])
+    const handleGoBack = useCallback(() => navigation.back(), [navigation])
+    const handleSelect = useCallback(() => {
+        actions[type](row)
+        AnimationStoreAction.setDelayByAnimation(Transitions.CurrencyNumberTransition, DefaultAnimationDuration * 2)
+    }, [type])
 
     const callback = useAnimatedCallback(handleGoBack)
-    const select = useAnimatedCallback(handleSelect)
 
-    const handleRowPress = useHapticsCallback(() => fetchRates(row, select, callback), [row])
+    const handleRowPress = useHapticsCallback(() => fetchRates(row, handleSelect, callback), [row])
 
     return (
         <Pressable onPress={handleRowPress}
