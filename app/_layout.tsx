@@ -5,6 +5,7 @@ import { Inter_400Regular, Inter_700Bold, useFonts } from "@expo-google-fonts/in
 import { UnistylesProvider } from "react-native-unistyles"
 import { Stack } from "expo-router"
 import { useEffect } from "react"
+import { fetchRates } from "@/utils/networking"
 
 export default function RootLayout() {
     const [loaded] = useFonts({
@@ -14,7 +15,12 @@ export default function RootLayout() {
 
     useEffect(() => {
         if (loaded) {
-            SplashScreen.hideAsync()
+
+            fetchRates(
+                () => SplashScreen.hideAsync(),
+                () => {
+                }
+            )
         }
     }, [loaded])
 

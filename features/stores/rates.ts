@@ -11,24 +11,37 @@ const zustandPersistStorage: StateStorage = {
 }
 
 export interface CurrencyRatesStore {
-    map: Map<string, ICurrencyRateResponse>
+    map: Record<string, ICurrencyRateResponse>
 }
 
 export const useCurrencyRatesStore = create(
     persist<CurrencyRatesStore>(
-        () => ({ map: new Map<string, ICurrencyRateResponse>() }),
-        { name: "currency_rates_store", storage: createJSONStorage(() => zustandPersistStorage), version: 0 }
+        () => ({ map: {} }),
+        {
+            name: "currency_rates_store",
+            storage: createJSONStorage(() => zustandPersistStorage),
+            version: 0
+        }
     )
 )
 
 export const CurrencyRatesStoreAction = {
     setRateBy: (base: string, response: ICurrencyRateResponse) => {
-        useCurrencyRatesStore.setState((previous) => ({
-            map: new Map<string, ICurrencyRateResponse>(previous.map).set(base, response)
-        }))
+        useCurrencyRatesStore.setState((previous) => {
+
+            previous.map[base] = response
+
+            return {
+                map: previous.map
+            }
+        })
     }
 }
 
 export const CurrencyRatesStoreSelector = {
-    useGetRateBy: (base: string) => useCurrencyRatesStore((state) => state.map.get && state.map.get(base))
+    useGetRateBy: (base: string) => useCurrencyRatesStore((state) => state.map[base])
+}
+
+export const CurrencyRatesStaticSelector = {
+    getRateBy: (base: string) => useCurrencyRatesStore.getState().map[base]
 }
