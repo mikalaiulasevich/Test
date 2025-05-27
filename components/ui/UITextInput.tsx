@@ -70,6 +70,7 @@ export const UICurrencyTextInput: UIComponent<UICurrencyInputProps> = ({
 
     return (
         <UITextInput
+            hitSlop={20}
             onChange={_onChange}
             value={formattedValue}
             {...rest}

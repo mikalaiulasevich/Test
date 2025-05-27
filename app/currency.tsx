@@ -15,10 +15,13 @@ export default function CurrencyView() {
     const dictionary = useDictionary()
 
     const { styles } = useStyles(stylesheet)
-    
+
     useFocusEffect(
         useCallback(
-            () => () => SearchQueryStoreAction.reset()
+            () => {
+                return () => SearchQueryStoreAction.reset()
+            },
+            []
         )
     )
 

@@ -1,4 +1,4 @@
-import { Pressable, View } from "react-native"
+import { Keyboard, Pressable, View } from "react-native"
 
 import { Icons } from "@/constants/assets"
 import { createStyleSheet, useStyles } from "react-native-unistyles"
@@ -30,15 +30,21 @@ export const ConversionCurrencySelectors = () => {
         [input, output]
     )
 
-    const handleInputPress = useHapticsCallback(() => navigation.push({
-        pathname: Routes[Screens.CurrencyView],
-        params: { type: CurrencySelectType.Input }
-    }), [navigation])
+    const handleInputPress = useHapticsCallback(() => {
+        Keyboard.dismiss()
+        navigation.push({
+            pathname: Routes[Screens.CurrencyView],
+            params: { type: CurrencySelectType.Input }
+        })
+    }, [navigation])
 
-    const handleOutputPress = useHapticsCallback(() => navigation.push({
-        pathname: Routes[Screens.CurrencyView],
-        params: { type: CurrencySelectType.Output }
-    }), [navigation])
+    const handleOutputPress = useHapticsCallback(() => {
+        Keyboard.dismiss()
+        navigation.push({
+            pathname: Routes[Screens.CurrencyView],
+            params: { type: CurrencySelectType.Output }
+        })
+    }, [navigation])
 
     return (
         <View style={styles.container}>

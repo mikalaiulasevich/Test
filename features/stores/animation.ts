@@ -18,11 +18,12 @@ export const AnimationStoreAction = {
             }
         }
     }),
-    deleteAnimationDelayBy: (name: string) => useAnimationStore.setState(state => {
-        const result = { ...state.delayMap }
-        delete result[name]
-        return result
-    })
+    deleteAnimationDelayBy: (name: string) => useAnimationStore.setState(state => ({
+        delayMap: {
+            ...state.delayMap,
+            [name]: 0
+        }
+    }))
 }
 
 export const AnimationStoreSelector = {

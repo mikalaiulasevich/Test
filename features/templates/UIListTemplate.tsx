@@ -25,6 +25,7 @@ export function UIListTemplate<T extends UniqEntity>({
                               data={data}
                               style={style}
                               itemLayoutAnimation={LinearTransition}
+                              keyboardShouldPersistTaps="always"
                               contentContainerStyle={contentContainerStyle}
     />
 }
