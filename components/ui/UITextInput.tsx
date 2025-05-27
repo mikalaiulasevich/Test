@@ -84,7 +84,7 @@ export const stylesheet = createStyleSheet((theme) => ({
     container: {
         height: 42,
         paddingHorizontal: 16,
-        paddingVertical: Platform.select({
+        paddingVertical: Platform.select<number>({
             ios: 12,
             default: 0
         }),
