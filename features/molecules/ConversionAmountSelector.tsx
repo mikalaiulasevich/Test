@@ -11,7 +11,7 @@ export const ConversionAmountSelector: UIComponent = () => {
     const { styles } = useStyles(stylesheet)
 
     const dictionary = useDictionary()
-    const amount = AmountStoreSelector.useGetAmount()
+    const amount = AmountStoreSelector.useGetAmount(0)
 
     const handleChangeValue = useCallback(
         (value: number) => AmountStoreAction.setAmount(value),

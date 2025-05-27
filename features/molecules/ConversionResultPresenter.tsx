@@ -15,7 +15,7 @@ export const ConversionResultPresenter: UIComponent = () => {
 
     const input = CurrenciesStoreSelector.useGetInput()
     const output = CurrenciesStoreSelector.useGetOutput()
-    const amount = AmountStoreSelector.useGetAmount()
+    const amount = AmountStoreSelector.useGetAmount(0)
 
     const result = useCalculatedConversionResult(input, output, amount)
 

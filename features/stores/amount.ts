@@ -13,9 +13,9 @@ export const useAmountStore = create<AmountStore>(() => ({
 }))
 
 export const AmountStoreAction = {
-    setAmount: (value: number) => useAmountStore.setState({ amount: value })
+    setAmount: (value: number) => useAmountStore.setState({ amount: isNaN(value) ? 0 : value })
 }
 
 export const AmountStoreSelector = {
-    useGetAmount: () => useAmountStore((state) => state.amount)
+    useGetAmount: (defaultValue: number) => useAmountStore((state) => state.amount ?? defaultValue)
 }
